@@ -84,12 +84,12 @@ static void write_tensor_to_csv(struct ggml_tensor* tensor, const char* custom_f
     
     // Write base tensor info
     fprintf(file, 
-            "%p,%s,%s,%" PRId64 ",%" PRId64 ",%" PRId64 ",%" PRId64 ",%.2f,%s",
+            "%p,%s,%s,%" PRId64 ",%" PRId64 ",%" PRId64 ",%" PRId64 ",%" PRIu64 ",%s",
             (void*)tensor,                               // node_id (pointer for uniqueness)
             tensor->name[0] ? tensor->name : "unnamed",  // name
             ggml_op_name(tensor->op),                    // op
             tensor->ne[0], tensor->ne[1], tensor->ne[2], tensor->ne[3], // dimensions
-            (double)total_size,                          // bytes
+            (uint64_t)total_size,                        // bytes as integer
             flags);                                      // flags
     
     // Write all source tensors dynamically
@@ -147,4 +147,3 @@ void ggml_log_graph(struct ggml_cgraph* cgraph) {
             cgraph->n_nodes, cgraph->n_leafs);    
     exit(0);
 }
-
